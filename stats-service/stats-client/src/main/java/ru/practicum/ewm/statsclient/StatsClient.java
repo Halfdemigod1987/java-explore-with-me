@@ -33,7 +33,7 @@ public class StatsClient extends BaseClient {
                 "uris", uris,
                 "unique", unique
         );
-        return get("/stats?state={state}&from={from}&size={size}", parameters);
+        return get("/stats?start={start}&end={end}&uris={uris}&unique={unique}", parameters);
     }
 
     public ResponseEntity<Object> createHit(String app, String uri, String ip, LocalDateTime timestamp) {
