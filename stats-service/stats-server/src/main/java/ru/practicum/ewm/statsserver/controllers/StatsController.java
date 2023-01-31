@@ -20,7 +20,7 @@ public class StatsController {
                                                    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime end,
                                                    @RequestParam(required = false) List<String> uris,
                                                    @RequestParam(required = false, defaultValue = "false") Boolean unique) {
-        return ResponseEntity.ok(statsService.getStats(start, end, uris, unique ));
+        return ResponseEntity.ok(statsService.getStats(start, end, uris, unique));
     }
 
     @PostMapping("hit")
