@@ -2,12 +2,14 @@ package ru.practicum.ewm.statsserver.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 import ru.practicum.ewm.statsserver.model.EndpointHit;
 import ru.practicum.ewm.statsserver.model.Stats;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Repository
 public interface StatsRepository extends JpaRepository<EndpointHit, Long> {
     @Query("select new ru.practicum.ewm.statsserver.model.Stats(e.app, e.uri, count(e.ip)) from EndpointHit e " +
             "where e.timestamp >= ?1 and timestamp <= ?2 and e.uri in (?3)" +
