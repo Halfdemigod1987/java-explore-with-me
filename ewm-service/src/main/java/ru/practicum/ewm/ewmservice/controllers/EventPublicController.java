@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.ewmservice.dto.EventFullDto;
 import ru.practicum.ewm.ewmservice.services.EventService;
-import ru.practicum.ewm.statsclient.StatsClient;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
@@ -17,7 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EventPublicController {
     private final EventService eventService;
-    private final StatsClient statsClient;
 
     @GetMapping("")
     public ResponseEntity<List<EventFullDto>> findAllEvents(@RequestParam(required = false) String text,
@@ -34,17 +32,13 @@ public class EventPublicController {
                                                             @RequestParam(required = false) Integer from,
                                                             @RequestParam(required = false) Integer size,
                                                             HttpServletRequest request) {
-        statsClient.createHit("java-explore-with-me", request.getRequestURI(),
-                request.getRemoteAddr(), LocalDateTime.now());
         return ResponseEntity.ok(eventService.findAllPublicEvents(text, categories, paid, rangeStart,
-                rangeEnd, onlyAvailable, sort, from, size));
+                rangeEnd, onlyAvailable, sort, from, size, request.getRequestURI(), request.getRemoteAddr()));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<EventFullDto> findEventById(@PathVariable Long id, HttpServletRequest request) {
-        statsClient.createHit("java-explore-with-me", request.getRequestURI(),
-                request.getRemoteAddr(), LocalDateTime.now());
-        return ResponseEntity.ok(eventService.findPublicEventById(id));
+        return ResponseEntity.ok(eventService.findPublicEventById(id, request.getRequestURI(), request.getRemoteAddr()));
     }
 
 }

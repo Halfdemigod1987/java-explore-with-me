@@ -38,7 +38,9 @@ public interface EventService {
                                            Boolean onlyAvailable,
                                            String sort,
                                            Integer from,
-                                           Integer size);
+                                           Integer size,
+                                           String uri,
+                                           String ip);
 
-    EventFullDto findPublicEventById(Long id);
+    EventFullDto findPublicEventById(Long id, String uri, String ip);
 }

@@ -12,6 +12,7 @@ import ru.practicum.ewm.ewmservice.dto.mappers.RequestMapper;
 import ru.practicum.ewm.ewmservice.exceptions.*;
 import ru.practicum.ewm.ewmservice.model.*;
 import ru.practicum.ewm.ewmservice.services.EventService;
+import ru.practicum.ewm.statsclient.StatsClient;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
@@ -29,6 +30,7 @@ public class EventServiceImpl implements EventService {
     private final RequestRepository requestRepository;
     private final EventMapper eventMapper;
     private final RequestMapper requestMapper;
+    private final StatsClient statsClient;
 
     private User findUserById(Long id) {
         return userRepository.findById(id)
@@ -236,7 +238,11 @@ public class EventServiceImpl implements EventService {
                                                   Boolean onlyAvailable,
                                                   String sort,
                                                   Integer from,
-                                                  Integer size) {
+                                                  Integer size,
+                                                  String uri,
+                                                  String ip) {
+
+        statsClient.createHit("java-explore-with-me", uri, ip, LocalDateTime.now());
 
         List<Event> events = eventRepository.findAllPublicEventsWithFilter(text,
                 categories,
@@ -259,7 +265,9 @@ public class EventServiceImpl implements EventService {
 
     @Override
     @Transactional
-    public EventFullDto findPublicEventById(Long id) {
+    public EventFullDto findPublicEventById(Long id, String uri, String ip) {
+        statsClient.createHit("java-explore-with-me", uri, ip, LocalDateTime.now());
+
         Event event = findEventById(id);
         if (!event.getState().equals(EventState.PUBLISHED)) {
             throw new EventNotFoundException(String.format("Event with id=%d was not found", id));
