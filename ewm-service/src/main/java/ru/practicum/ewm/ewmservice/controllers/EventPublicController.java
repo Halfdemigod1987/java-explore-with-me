@@ -4,7 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.ewm.ewmservice.dto.CommentDto;
 import ru.practicum.ewm.ewmservice.dto.EventFullDto;
+import ru.practicum.ewm.ewmservice.services.CommentService;
 import ru.practicum.ewm.ewmservice.services.EventService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EventPublicController {
     private final EventService eventService;
+    private final CommentService commentService;
 
     @GetMapping("")
     public ResponseEntity<List<EventFullDto>> findAllEvents(@RequestParam(required = false) String text,
@@ -39,6 +42,19 @@ public class EventPublicController {
     @GetMapping("/{id}")
     public ResponseEntity<EventFullDto> findEventById(@PathVariable Long id, HttpServletRequest request) {
         return ResponseEntity.ok(eventService.findPublicEventById(id, request.getRequestURI(), request.getRemoteAddr()));
+    }
+
+    @GetMapping("/{eventId}/comments")
+    public ResponseEntity<List<CommentDto>> findAllEventComments(@PathVariable Long eventId,
+                                                                 @RequestParam(required = false) Integer from,
+                                                                 @RequestParam(required = false) Integer size) {
+        return ResponseEntity.ok((commentService.findAllPublicEventComments(eventId, from, size)));
+    }
+
+    @GetMapping("/{eventId}/comments/{commentId}")
+    public ResponseEntity<CommentDto> findAllEventComments(@PathVariable Long eventId,
+                                                                 @PathVariable Long commentId) {
+        return ResponseEntity.ok((commentService.findPublicEventCommentById(eventId, commentId)));
     }
 
 }

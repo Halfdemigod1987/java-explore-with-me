@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.ewmservice.dto.*;
+import ru.practicum.ewm.ewmservice.services.CommentService;
 import ru.practicum.ewm.ewmservice.services.EventService;
 
 import javax.validation.Valid;
@@ -15,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EventPrivateController {
     private final EventService eventService;
+    private final CommentService commentService;
 
     @GetMapping("")
     public ResponseEntity<List<EventShortDto>> findAllUserEvents(@PathVariable Long userId,
@@ -54,6 +56,22 @@ public class EventPrivateController {
             @PathVariable Long userId,
             @PathVariable Long eventId) {
         return ResponseEntity.ok(eventService.updateEventRequests(requestUpdateDto, userId, eventId));
+    }
+
+    @PostMapping("{eventId}/comments")
+    public ResponseEntity<CommentDto> createEventComment(@Valid @RequestBody CommentNewDto commentNewDto,
+                                                         @PathVariable Long userId,
+                                                         @PathVariable Long eventId) {
+        return new ResponseEntity<>(commentService.createEventComment(commentNewDto, userId, eventId), HttpStatus.CREATED);
+    }
+
+    @PatchMapping("{eventId}/comments/{commentId}")
+    public ResponseEntity<CommentDto> updateEventComment(@Valid @RequestBody CommentNewDto commentNewDto,
+                                                         @PathVariable Long userId,
+                                                         @PathVariable Long eventId,
+                                                         @PathVariable Long commentId
+                                                         ) {
+        return ResponseEntity.ok(commentService.updateEventComment(commentNewDto, userId, eventId, commentId));
     }
 
 }

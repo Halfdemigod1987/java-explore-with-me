@@ -234,6 +234,18 @@ public class ErrorHandler {
     }
 
     @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handleCommentNotFoundException(final CommentNotFoundException e) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(ErrorResponse.builder()
+                        .status("NOT_FOUND")
+                        .reason("The required object was not found.")
+                        .message(e.getMessage())
+                        .timestamp(LocalDateTime.now())
+                        .build());
+    }
+
+    @ExceptionHandler
     public ResponseEntity<ErrorResponse> handleException(final Exception e) {
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
