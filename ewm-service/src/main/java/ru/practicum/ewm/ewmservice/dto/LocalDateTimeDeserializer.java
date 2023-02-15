@@ -1,4 +1,4 @@
-package ru.practicum.ewm.statsserver.dto;
+package ru.practicum.ewm.ewmservice.dto;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 
 @JsonComponent
 public class LocalDateTimeDeserializer extends JsonDeserializer<LocalDateTime> {
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter. ofPattern("yyyy-MM-dd HH:mm:ss");
 
     @Override
     public LocalDateTime deserialize(JsonParser jsonParser,

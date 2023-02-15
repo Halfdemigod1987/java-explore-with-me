@@ -2,6 +2,7 @@ package ru.practicum.ewm.statsserver.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.statsdto.*;
@@ -15,7 +16,7 @@ import java.util.List;
 public class StatsController {
     private final StatsService statsService;
 
-    @GetMapping("stats")
+    @GetMapping("/stats")
     public ResponseEntity<List<StatsDto>> getStats(@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime start,
                                                    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime end,
                                                    @RequestParam(required = false) List<String> uris,
@@ -23,8 +24,8 @@ public class StatsController {
         return ResponseEntity.ok(statsService.getStats(start, end, uris, unique));
     }
 
-    @PostMapping("hit")
+    @PostMapping("/hit")
     public ResponseEntity<EndpointHitDto> createHit(@RequestBody EndpointHitDto endpointHitDto) {
-        return ResponseEntity.ok(statsService.createHit(endpointHitDto));
+        return new ResponseEntity<>(statsService.createHit(endpointHitDto), HttpStatus.CREATED);
     }
 }
