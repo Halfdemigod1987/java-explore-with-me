@@ -8,6 +8,7 @@ import ru.practicum.ewm.ewmservice.model.Event;
 import ru.practicum.ewm.ewmservice.model.User;
 
 import java.util.List;
+
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
