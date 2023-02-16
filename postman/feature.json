@@ -342,6 +342,10 @@
 						"type": "default"
 					}
 				],
+				"body": {
+					"mode": "raw",
+					"raw": "{{request_body}}"
+				},
 				"url": {
 					"raw": "{{baseUrl}}/users/:userId/events/:eventId/comments/:commentId",
 					"host": [
@@ -458,6 +462,10 @@
 						"type": "default"
 					}
 				],
+				"body": {
+					"mode": "raw",
+					"raw": "{{request_body}}"
+				},
 				"url": {
 					"raw": "{{baseUrl}}/users/:userId/events/:eventId/comments/:commentId",
 					"host": [
