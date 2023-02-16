@@ -11,6 +11,7 @@ import ru.practicum.ewm.ewmservice.model.Comment;
 @Component
 public interface CommentsMapper {
 
+    @Mapping(target = "event", ignore = true)
     Comment commentNewDtoToComment(CommentNewDto commentNewDto);
 
     @Mapping(source = "event.id", target = "event")
