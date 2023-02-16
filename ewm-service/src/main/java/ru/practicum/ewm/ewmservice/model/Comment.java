@@ -36,8 +36,8 @@ public class Comment {
         if (this == o) return true;
         if (o == null) return false;
         if (getClass()  != HibernateProxyHelper.getClassWithoutInitializingProxy(o)) return false;
-        Compilation compilation = (Compilation) o;
-        return Objects.equals(id, compilation.getId());
+        Comment comment = (Comment) o;
+        return Objects.equals(id, comment.getId());
     }
 
     @Override
