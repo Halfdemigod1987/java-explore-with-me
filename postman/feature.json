@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "5d208416-ffc2-4c0b-910e-05b164a6c98d",
+		"_postman_id": "175a4227-00c0-4056-b396-8e34ca0dd42e",
 		"name": "Test Explore With Me - Comments",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -91,11 +91,20 @@
 				"method": "POST",
 				"header": [
 					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
 						"key": "Accept",
 						"value": "application/json",
 						"type": "default"
 					}
 				],
+				"body": {
+					"mode": "raw",
+					"raw": "{{request_body}}"
+				},
 				"url": {
 					"raw": "{{baseUrl}}/users/:userId/events/:eventId/comments",
 					"host": [
@@ -198,11 +207,20 @@
 				"method": "POST",
 				"header": [
 					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
 						"key": "Accept",
 						"value": "application/json",
 						"type": "default"
 					}
 				],
+				"body": {
+					"mode": "raw",
+					"raw": "{{request_body}}"
+				},
 				"url": {
 					"raw": "{{baseUrl}}/users/:userId/events/:eventId/comments",
 					"host": [
