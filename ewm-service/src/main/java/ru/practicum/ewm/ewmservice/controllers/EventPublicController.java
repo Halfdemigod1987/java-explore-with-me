@@ -40,5 +40,4 @@ public class EventPublicController {
     public ResponseEntity<EventFullDto> findEventById(@PathVariable Long id, HttpServletRequest request) {
         return ResponseEntity.ok(eventService.findPublicEventById(id, request.getRequestURI(), request.getRemoteAddr()));
     }
-
 }

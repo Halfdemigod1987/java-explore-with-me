@@ -1,46 +1,48 @@
 package ru.practicum.ewm.ewmservice.model;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.proxy.HibernateProxyHelper;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
-@Table(name = "users")
+@Table(name = "comments")
 @Getter
 @Setter
 @ToString
-@AllArgsConstructor
-@NoArgsConstructor
-public class User {
+@RequiredArgsConstructor
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String email;
-    @NotBlank
-    @Column(unique = true)
-    private String name;
-    @OneToMany(mappedBy = "initiator")
-    @ToString.Exclude
-    private Set<Event> events;
-    @OneToMany(mappedBy = "event")
-    @ToString.Exclude
-    private Set<Comment> comments;
+
+    private String text;
+    @Column(name = "created_date")
+    private LocalDateTime created;
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private User author;
+    @ManyToOne
+    @JoinColumn(name = "event_id")
+    private Event event;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null) return false;
         if (getClass()  != HibernateProxyHelper.getClassWithoutInitializingProxy(o)) return false;
-        User user = (User) o;
-        return Objects.equals(id, user.getId());
+        Comment comment = (Comment) o;
+        return Objects.equals(id, comment.getId());
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id);
     }
+
 }

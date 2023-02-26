@@ -51,6 +51,9 @@ public class Event {
     @OneToMany(mappedBy = "event")
     @ToString.Exclude
     private Set<Request> requests;
+    @OneToMany(mappedBy = "event")
+    @ToString.Exclude
+    private Set<Comment> comments;
 
     @Override
     public boolean equals(Object o) {
